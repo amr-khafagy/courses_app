@@ -12,6 +12,7 @@ class Video extends StatefulWidget {
 
 class _VideoState extends State<Video> {
   VideoPlayerController _controller;
+  double speed=1;
 
   @override
   void initState() {
@@ -27,6 +28,7 @@ class _VideoState extends State<Video> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
             child: _controller.value.isInitialized
@@ -50,10 +52,26 @@ class _VideoState extends State<Video> {
                   });
                 },
               ),
-             Controls(icon:Icon(Icons.volume_down_rounded),onpressed: (){ setState(() {
-               _controller.setVolume(2.5);
-             });},),
-             Text(_controller.value.duration.inMinutes.toString())
+              Text(_controller.value.duration.inMinutes.toString()),
+              Controls(
+                onpressed: () {
+                  setState(() {
+                    _controller.setPlaybackSpeed(speed++);
+                  });
+                },
+                icon: Icon(Icons.speed),
+              ),
+              Controls(
+                onpressed: () {
+                  setState(() {
+                    _controller.setPlaybackSpeed(speed--);
+                  });
+                },
+                icon: Icon(Icons.slow_motion_video),
+              ),
+              Controls(onpressed: (){setState(() {
+
+              });},icon: Icon(Icons.fullscreen),)
             ],
           )
         ],
